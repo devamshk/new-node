@@ -6,7 +6,7 @@ const group = require("./Model/group");
 const path = require("path");
 const dotenv = require("dotenv");
 const pug = require("pug");
-
+const cors = require("cors");
 dotenv.config({ path: path.join(__dirname, "config.env") });
 
 app.use(express.json());
@@ -23,6 +23,7 @@ mongoose.connection.on("connected", () => {
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(cors());
 const save = async () => {
   const all = await model.find();
   console.log(all);
@@ -33,23 +34,16 @@ const save = async () => {
   });
   temp.save();
 };
-save();
 
 app.get("/", async (req, res) => {
   // res.render("base");
   res.render("base");
 });
-
-app.get("/group", async (req, res) => {
-  const all = await group.find();
-  console.log(all);
-  res.send(all);
+app.post("/", async (req, res) => {
+  const data = req.body;
+  console.log(data);
+  const temp = new model(data);
+  temp.save();
+  res.send("Data Saved");
 });
-
-// app.post("/", async (req, res) => {
-//   const temp = new model(req.body);
-//   await temp.save();
-//   res.send("Hello World");
-// });
-
 module.exports = app;

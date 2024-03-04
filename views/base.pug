@@ -6,10 +6,11 @@ html(lang="en")
       
   body
     div.cont
-        form.form(action="/" method="get")
+        form.form
             label(for="name") Name
             input#name( type="text" name="name")
             label(for="age") Age
             input#age(type="number" name="age")
             input(type="submit" value="Submit")
-    script(src='/JS/base.js')
+  script(src='/JS/base.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js')
