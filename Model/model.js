@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 
 const Schema = new mongoose.Schema({
   name: { type: String },
-  age: Number,
+  age: { type: Number, min: 0 },
+  value: { type: Number, default: 0 },
   total: { type: Number, default: 0 },
 });
 

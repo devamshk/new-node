@@ -1,0 +1,15 @@
+doctype html
+html(lang="en")
+  head
+    title= pageTitle
+    link(rel="stylesheet", href="/CSS/split.css")
+      
+  body
+    div.cont
+        div.box
+            for each of people 
+                div.person
+                    span #{each.name} 
+                    span #{each.value}
+
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js')

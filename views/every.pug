@@ -1,0 +1,28 @@
+doctype html
+html(lang="en")
+  head
+    title= pageTitle
+    link(rel="stylesheet", href="/CSS/every.css")
+      
+  body
+    div.cont
+        form.form
+            label(for="name") Name
+            input#name( type="text" name="name" )
+            label(for="cost") value 
+            input#cost(type="number" name="value" step="1" min="0" max="1000000" placeholder="0") 
+            label(for="paid") Paid
+            select#paid (name="person")
+                for each in people
+                    option(value=each.name) #{each.name}
+            label(for="check") To
+            - var i = 0;
+            for each in people 
+                
+                div.check
+                    - i++
+                    input(type="checkbox" name=each.name value=each.name id=i) 
+                    label(for=i) #{each.name}
+            input(type="submit" value="Submit")
+  script(src='/JS/cost.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js')
