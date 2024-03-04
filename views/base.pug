@@ -1,0 +1,15 @@
+doctype html
+html(lang="en")
+  head
+    title= pageTitle
+    link(rel="stylesheet", href="/CSS/base.css")
+      
+  body
+    div.cont
+        form.form(action="/" method="get")
+            label(for="name") Name
+            input#name( type="text" name="name")
+            label(for="age") Age
+            input#age(type="number" name="age")
+            input(type="submit" value="Submit")
+    script(src='/JS/base.js')
