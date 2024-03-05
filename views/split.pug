@@ -7,9 +7,8 @@ html(lang="en")
   body
     div.cont
         div.box
-            for each of people 
+            for each of some
                 div.person
-                    span #{each.name} 
-                    span #{each.value}
+                    p #{each.from} should pay #{each.to} of #{each.cost}
 
   script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js')

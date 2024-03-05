@@ -51,7 +51,8 @@ app.post("/", async (req, res) => {
 
 app.get("/cost", async (req, res) => {
   const people = await model.find();
-  res.render("every", { people });
+  res.send(people);
+  // res.render("every", { people });
 });
 app.post("/cost", async (req, res) => {
   const data = req.body;
@@ -81,25 +82,46 @@ app.get("/details", async (req, res) => {
 });
 
 app.get("/split", async (req, res) => {
+  const some = [];
   const people = await model.find().select("value name");
   const temp = new my((a, b) => a.value - b.value);
   for (let one of people) {
     temp.add({ cost: one.value, name: one.name });
   }
-  while (temp.length() > 0) {
+  while (temp.length() > 1) {
     const first = temp.first();
     const last = temp.last();
     const cost = Math.min(Math.abs(first.cost), Math.abs(last.cost));
-    // first.cost += cost;
-    // last.cost -= cost;
     if (first.cost + cost == 0) {
       temp.delete(first);
-    } else if (last.cost - cost == 0) {
       temp.delete(last);
+      last.cost -= cost;
+      temp.add(last);
+    } else if (last.cost - cost == 0) {
+      temp.delete(first);
+      temp.delete(last);
+      first.cost += cost;
+      temp.add(first);
     }
-    console.log(`${first.name} pays ${cost} to ${last.name}`);
+    if (cost != 0) {
+      console.log(`${first.name} will pay ${cost} to ${last.name}`);
+      some.push({ from: first.name, to: last.name, cost });
+    }
   }
-  res.render("split", { people });
+  // res.render("split", { some });
+  res.send(some);
+});
+
+app.get("/individual", async (req, res) => {
+  const people = await model.find();
+  res.render("individual", { people });
+});
+
+app.post("/individual", async (req, res) => {
+  const people = await model.find();
+  const data = req.body;
+  console.log(data);
+  res.send("Data saved");
 });
 
 module.exports = app;
